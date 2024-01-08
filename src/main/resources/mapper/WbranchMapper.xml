@@ -1,9 +1,0 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aaa.mapper.WbranchMapper">
-    <select id="findBranch" resultType="com.aaa.entity.Wbranch">
-          select braid,bracode,braname,braprovince,bracity,bracounty,braaddress,brasuoshu,brarank,braprincipal,braphone,brapicture,braremark,bratime from branch
-
-    </select>
-</mapper>

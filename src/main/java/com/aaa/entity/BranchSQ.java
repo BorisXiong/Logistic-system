@@ -1,6 +1,6 @@
 package com.aaa.entity;
 
-public class Wbranch {
+public class BranchSQ {
     private Integer braid;
     private String bracode;
     private String braname;
@@ -16,6 +16,15 @@ public class Wbranch {
     private String brapicture;
     private String braremark;
     private String bratime;
+    private Integer state;
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public Integer getBraid() {
         return braid;

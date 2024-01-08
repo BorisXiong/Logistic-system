@@ -34,6 +34,7 @@
 </style>
 </head>
 <body>
+<div id="brarank">${brarank}</div>
     <div style="width: 100%; height: 580px">
 <#--        左侧-->
         <div style="width: 600px; height: 560px; background-color: #c5dbec;float: left; ">
@@ -80,12 +81,20 @@
                 </table>
                 <table>
                     <tr>
-                        <td style="width: 585px;margin: 15px;row-span: 2"><input type="text" name="braaddress"  id="braaddress" placeholder="详细地址" autocomplete="off" class="layui-input" lay-verify="required"></td>
+                        <td style="width: 300px;margin: 15px;row-span: 2"><input type="text" name="braaddress"  id="braaddress" placeholder="详细地址" autocomplete="off" class="layui-input" lay-verify="required"></td>
+                        <td>
+                            <div class="layui-input-inline">
+                                <select id="type" name="type">
+                                        <option value="">请选择</option>
+                                </select>
+                            </div>
+
+                        </td>
                     </tr>
-                    <tr>
-                        <td style="width: 285px;margin: 15px"><input type="text" name="braprincipal" id="braprincipal"  placeholder="负责人" autocomplete="off" class="layui-input" lay-verify="required"></td>
-                        <td style="width: 285px;margin: 15px"><input type="text" name="braphone" id="braphone" placeholder="电话" autocomplete="off" class="layui-input" lay-verify="required|phone|number" ></td>
-                    </tr>
+<#--                    <tr>-->
+<#--                        <td style="width: 285px;margin: 15px"><input type="text" name="braprincipal" id="braprincipal"  placeholder="负责人" autocomplete="off" class="layui-input" lay-verify="required"></td>-->
+<#--                        <td style="width: 285px;margin: 15px"><input type="text" name="braphone" id="braphone" placeholder="电话" autocomplete="off" class="layui-input" lay-verify="required|phone|number" ></td>-->
+<#--                    </tr>-->
                     <tr>
                         <td style="width: 585px;margin: 15px"><input type="text" name="braremark" id="braremark" placeholder="备注" autocomplete="off" class="layui-input" lay-verify="required"></td>
                     </tr>
@@ -106,6 +115,9 @@
                             <div class="layui-input-block">
                                 <button class="layui-btn" lay-submit lay-filter="tj">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+
+
                             </div>
                         </td>
                     </tr>
@@ -115,6 +127,7 @@
         </div>
 
     </div>
+
 
 </body>
 <script type="text/javascript">
@@ -166,6 +179,24 @@
             ]]
         });
 
+        $.ajax({
+            url:"/admin/network/selbranch",
+            type:"post",
+            dataType:"json",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#type').append(new Option( item.braname,item.braid));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");//重新渲染 固定写法
+            }})
+
+
+
+
+
+
+
+
         table.on('tool(test)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             layEvent = obj.event;
@@ -209,23 +240,26 @@
 
 
         form.on('submit(tj)', function(data){
-            // var provid= document.getElementById("provid").title;
+             var provid= $("#brarank").text();
             // var cityid= document.getElementById("cityid").title;
             // var areaid= document.getElementById("areaid").title;
-            // alert(provid,cityid,areaid);
+             alert($("#type").val());
+            if (provid<=1){
             $.ajax({
                 url:'/admin/network/insertbranch',
                 method:'post',
-                data:{bracode:$("#bracode").val(),
-                        braname:$("#braname").val(),
-                    branameEnglish:$("#branameEnglish").val(),
-                    provid:$("#provid option:selected").text(),
-                    cityid:$("#cityid option:selected").text(),
-                    areaid:$("#areaid option:selected").text(),
-                    braaddress:$("#braaddress").val(),
-                    braprincipal:$("#braprincipal").val(),
-                    braphone:$("#braphone").val(),
-                    braremark:$("#braremark").val()
+                 data:{bracode:$("#bracode").val(),
+                     braname:$("#braname").val(),
+                     branameEnglish:$("#branameEnglish").val(),
+                     provid:$("#provid option:selected").text(),
+                     cityid:$("#cityid option:selected").text(),
+                     areaid:$("#areaid option:selected").text(),
+                     braaddress:$("#braaddress").val(),
+                     typetext:$("#type :selected").text(),
+                     typebraid:$("#type").val(),
+                     // braprincipal:$("#braprincipal").val(),
+                     // braphone:$("#braphone").val(),
+                     braremark:$("#braremark").val()
                         },
                 dataType:'JSON',
                 success:function(res){
@@ -240,7 +274,36 @@
 
                 }
             }) ;
+            }else{
+                //提交添加网点申请
+                $.ajax({
+                    url:'/admin/network/insertbranchSQ',
+                    method:'post',
+                     data:{bracode:$("#bracode").val(),
+                         braname:$("#braname").val(),
+                         branameEnglish:$("#branameEnglish").val(),
+                         provid:$("#provid option:selected").text(),
+                         cityid:$("#cityid option:selected").text(),
+                         areaid:$("#areaid option:selected").text(),
+                         braaddress:$("#braaddress").val(),
+                         typetext:$("#type :selected").text(),
+                         typebraid:$("#type").val(),
+                         braremark:$("#braremark").val()
+                    },
+                    dataType:'JSON',
+                    success:function(res){
+                        if(res.code='0'){
 
+                            window.location.reload();
+                        }
+                        else
+                            alert(res.msg);
+                    },
+                    error:function (data) {
+
+                    }
+                }) ;
+            }
         });
 
     });

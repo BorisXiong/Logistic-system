@@ -2,6 +2,6 @@
 <mapper namespace="com.aaa.mapper.TuserMapperTwo">
 
     <select id="tuserList" resultType="com.aaa.entity.Branch" parameterType="com.aaa.entity.TuserTwo">
-        select braname,brarank from branch where braid=(select braid from staffdetails where id=(select id from t_user where user_name=#{username}))
+        select braname,brarank as brarank,braid from branch where braid=(select braid from staffdetails where id=(select id from t_user where user_name=#{username}))
     </select>
 </mapper>

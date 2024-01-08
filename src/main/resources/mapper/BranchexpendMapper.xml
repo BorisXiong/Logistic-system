@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.mapper.BranchexpendMapper">
     <insert id="insertBranchexpend" parameterType="com.aaa.entity.Branch">
-     insert into  branchexpend(braexname,braexludannumber,braexrecnumber,braexsendnumber,
-     braextakenumber,braexqiannumber,braexludan,braexaddress,braexaddresser,braexdelivery,
-     braexsign,braexdate) VALUES (#{braexname},0,0,0,0,0,0,0,0,0,0,STR_TO_DATE(DATE_FORMAT(now(),'%Y-%m'),'%Y-%m'))
+     insert into  branchexpend(braexname,braexludannumber,braexrecnumber,braexsendnumber,bradaojiannumber
+     braextakenumber,brawentijiannumber,braexqiannumber,braexludan,braexaddress,braexaddresser,bradaojian,braexdelivery,brawentijian
+     braexsign,braexdate) VALUES (#{braexname},0,0,0,0,0,0,0,0,0,0,0,0,0,0,STR_TO_DATE(DATE_FORMAT(now(),'%Y-%m'),'%Y-%m'))
     </insert>
 </mapper>

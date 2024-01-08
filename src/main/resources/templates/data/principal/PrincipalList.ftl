@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>网点审核</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,20 +23,17 @@
     <div class="layui-inline">
         <table>
             <tr>
-                <td>订单编号：</td>
-                <td><input class="layui-input" name="expnum" id="expnum" autocomplete="off" ></td>
-                <td>姓名：</td>
-                <td><input class="layui-input" name="sender" id="sender" autocomplete="off" ></td>
-                <td>手机号：</td>
-                <td><input class="layui-input" name="sendphone" id="sendphone" autocomplete="off" ></td>
+                <td>网点编号：</td>
+                <td><input class="layui-input" name="bracode" id="bracode" autocomplete="off" ></td>
                 <td><button class="layui-btn" data-type="reload" id="sou">搜索</button></td>
             </tr>
         </table>
     </div>
+</div>
     <table class="layui-table" lay-even lay-skin="nob" id="demo" lay-filter="test">
     </table>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="hkjl">查看物流信息</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="hkjl">添加负责人</a>
     </script>
 </div>
 </body>
@@ -48,18 +45,20 @@
 
         table.render({
             elem:'#demo'
-            ,url: '/admin/expressdetails/select'     //数据接口
+            ,url: '/admin/principal/select'     //数据接口
             //,where:{loanId:$("#loanId").val()}
             ,title: '类型维护'
             ,page:true           //是否开启分页
             ,totalRow: true
             ,limit:10
             ,cols: [[ //表头
-                {field: 'expdid', title: '序列'}
-                ,{field: 'expnum', title: '运单编号'}
-                ,{field: 'expoper', title: '姓名',totalRow: true}
-                ,{field: 'expoperipone', title: '电话',totalRow: true}
-                ,{fixed: 'right',title: '操作', align:'center', toolbar: '#barDemo'}
+                {field: 'braid', title: '序列'}
+                ,{field: 'bracode', title: '网点编号'}
+                ,{field: 'braname', title: '网点名称',totalRow: true}
+                ,{field: 'brasuoshu', title: '所属网点', totalRow: true}
+                ,{field: 'braremark', title: '备注',totalRow: true}
+                ,{field: 'bratime', title: '申请时间',totalRow: true}
+                ,{fixed: 'right',title: '操作',align:'center', toolbar: '#barDemo'}
             ]]
             ,id:'listData'
         });
@@ -70,12 +69,12 @@
             layEvent = obj.event;
             if (layEvent === "hkjl") {
                 layer.open({
-                    title: '物流信息',
+                    title: '添加负责人',
                     type: 2,
                     scrollbar: false,
-                    area: ['700px', '570px'],
+                    area: ['400px', '300px'],
                     closeBtn: 2,
-                    content: "/admin/expressdetails/update?expnum="+data.expnum,
+                    content: "/admin/principal/update?bracode="+data.bracode,
                     end: function () {
                         location.reload();
                     }
@@ -90,18 +89,14 @@
         })
         var $ = layui.$;
         $('#sou').on('click', function(){
-            var expnum = $('#expnum');
-            var sender = $('#sender');
-            var sendphone = $('#sendphone');
+            var bracode = $('#bracode');
             //执行重载
             table.reload('listData', {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
                 ,where: {
-                    expnum: expnum.val(),
-                    sender: sender.val(),
-                    sendphone: sendphone.val(),
+                    bracode: bracode.val(),
                 }
             });
         });

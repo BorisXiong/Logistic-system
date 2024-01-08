@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.mapper.BranchSQMapper">
+    <insert id="insertBranchSQ" parameterType="com.aaa.entity.BranchSQ" >
+        INSERT INTO branchsq(bracode,braname,branameEnglish,braprovince,bracity,bracounty,braaddress,brasuoshu,brarank,braprincipal,braphone,braremark,bratime,state)
+        VALUES (#{bracode},#{braname},#{branameEnglish},#{braprovince},#{bracity},#{bracounty},#{braaddress},#{brasuoshu},#{brarank},#{braprincipal},#{braphone},#{braremark},#{bratime},#{state})
+    </insert>
+
+    <select id="branchSQList" parameterType="map" resultType="map">
+   SELECT * FROM branchsq <where> 1=1
+        <if test="bracode!=null and bracode !=''">
+            and bracode = #{bracode}
+        </if>
+    </where> and state=1 LIMIT #{begin},#{end}
+    </select>
+
+    <select id="selectCount"  parameterType="map" resultType="int">
+        SELECT COUNT(bracode) FROM branchsq <where> 1=1
+        <if test="bracode!=null and bracode=''">
+            and bracode = #{bracode}
+        </if>
+    </where> and state=1
+    </select>
+    <select id="updatesel" parameterType="com.aaa.entity.BranchSQ" resultType="com.aaa.entity.BranchSQ">
+        select * from branchsq where bracode=#{bracode}
+    </select>
+    <update id="updatepass" parameterType="com.aaa.entity.BranchSQ" >
+        update branchsq set state=2 where bracode=#{bracode}
+    </update>
+    <update id="updateturn" parameterType="com.aaa.entity.BranchSQ" >
+        update branchsq set state=3 where bracode=#{bracode}
+    </update>
+
+    <select id="branchJGList" parameterType="map" resultType="map">
+        SELECT * FROM branchsq <where> 1=1
+        <if test="bracode!=null and bracode !=''">
+            and bracode = #{bracode}
+        </if>
+    </where> and state=3 LIMIT #{begin},#{end}
+    </select>
+
+    <select id="selectCountJG"  parameterType="map" resultType="int">
+        SELECT COUNT(bracode) FROM branchsq <where> 1=1
+        <if test="bracode!=null and bracode=''">
+            and bracode = #{bracode}
+        </if>
+    </where> and state=3
+    </select>
+    <select id="updateSQList"  parameterType="com.aaa.entity.BranchSQ" resultType="com.aaa.entity.BranchSQ">
+        SELECT * FROM branchsq WHERE bracode=#{bracode}
+    </select>
+    <update id="updateSQ" parameterType="com.aaa.entity.BranchSQ">
+        update branchsq set braname=#{braname},braaddress=#{braaddress},braprincipal=#{braprincipal},braphone=#{braphone},braremark=#{braremark},state=1 where bracode=#{bracode}
+   </update>
+    <delete id="delSQ" parameterType="com.aaa.entity.BranchSQ">
+        delete from branchsq where bracode=#{bracode}
+    </delete>
+
+</mapper>

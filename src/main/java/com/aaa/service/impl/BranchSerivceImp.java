@@ -16,6 +16,21 @@ import java.util.Map;
 public class BranchSerivceImp implements BranchService {
     @Autowired
     private BranchMapper branchMapper;
+    @Override
+    public List<Map> branchBDList(BaseQuery baseQuery,Branch branch) {
+        int begin=baseQuery.getLimit()*(baseQuery.getPage()-1);
+        int end=baseQuery.getLimit()*baseQuery.getPage();
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("begin", begin);
+        map.put("end", end);
+        map.put("bracode",branch.getBracode());
+        return branchMapper.branchBDList(map);
+    }
+
+    @Override
+    public int selectBDCount(Branch branch) {
+        return branchMapper.selectBDCount(branch);
+    }
 
 
     @Override
@@ -55,5 +70,20 @@ public class BranchSerivceImp implements BranchService {
     @Override
     public int del(Branch branch) {
         return branchMapper.del(branch);
+    }
+
+    @Override
+    public List<Branch> branchAll() {
+        return branchMapper.branchAll();
+    }
+
+    @Override
+    public List<Branch> branchMy(Branch branch) {
+        return branchMapper.branchMy(branch);
+    }
+
+    @Override
+    public List<Branch> selbraname(Branch branch) {
+        return branchMapper.selbraname(branch);
     }
 }

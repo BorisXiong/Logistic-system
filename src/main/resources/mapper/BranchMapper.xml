@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.mapper.BranchMapper">
+    <select id="branchBDList" parameterType="map" resultType="map">
+        select * FROM branch
+        <where> 1=1
+        <if test="bracode!=null and bracode!=''">
+            and bracode = #{bracode}
+        </if>
+        and braprincipal is NULL
+    </where>
+     LIMIT #{begin},#{end}
+    </select>
+    <select id="selectBDCount"  parameterType="map" resultType="int">
+        select count(*) FROM branch
+        <where> 1=1
+            <if test="bracode!=null and bracode!=''">
+                and bracode = #{bracode}
+            </if>
+            and braprincipal is NULL
+        </where>
+    </select>
     <select id="branchList" parameterType="map" resultType="map">
    SELECT * FROM branch WHERE brasuoshu=#{braname} and brarank=(#{brarank}+1) LIMIT #{begin},#{end}
     </select >
@@ -11,7 +30,7 @@
 
     <insert id="insertBranch" parameterType="com.aaa.entity.Branch">
         INSERT INTO branch(bracode,braname,branameEnglish,braprovince,bracity,bracounty,braaddress,brasuoshu,brarank,braprincipal,braphone,braremark,bratime)
-        VALUES (#{bracode},#{braname},#{branameEnglish},#{braprovince},#{bracity},#{bracounty},#{braaddress},#{brasuoshu},#{brarank},#{braprincipal},#{braphone},#{braremark},#{bratime})
+        VALUES (#{bracode},#{braname},#{branameEnglish},#{braprovince},#{bracity},#{bracounty},#{braaddress},#{brasuoshu},#{brarank}+1,#{braprincipal},#{braphone},#{braremark},#{bratime})
     </insert>
 
     <select id="updateList"  parameterType="com.aaa.entity.Branch" resultType="com.aaa.entity.Branch">
@@ -23,4 +42,19 @@ update branch set braname=#{braname},braaddress=#{braaddress},braprincipal=#{bra
     <delete id="del" parameterType="com.aaa.entity.Branch">
         delete from branch where bracode=#{bracode}
     </delete>
+
+    <select id="branchAll" resultType="com.aaa.entity.Branch">
+         SELECT braname,brarank FROM branch
+    </select>
+    <select id="branchMy"  parameterType="com.aaa.entity.Branch" resultType="com.aaa.entity.Branch">
+      SELECT braname,braid FROM branch where brarank>0 AND brasuoshu=#{brasuoshu}
+UNION
+SELECT braname,braid FROM branch WHERE brarank=#{brarank} AND braname=#{braname}
+    </select>
+    <select id="branchUp" resultType="com.aaa.entity.Branch">
+         SELECT braname,brarank FROM branch where
+    </select>
+    <select id="selbraname" parameterType="com.aaa.entity.Branch" resultType="com.aaa.entity.Branch">
+        SELECT braname,brarank from branch WHERE braid=#{braid}
+    </select>
 </mapper>

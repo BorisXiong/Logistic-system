@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.mapper.ExpressdetailsMapper">
-    <select id="expressdetailsList" parameterType="map" resultType="map" >
-        select * from expressdetails
-        <where> 1=1
-            <if test="expnum!=null and expnum!='' ">
-                and expnum =#{expnum}
-            </if>
-            <if test="expoper!=null and expoper!=''">
-                and expoper like concat('%',concat(#{expoper},'%'))
-            </if>
-            <if test="expoperipone!=null and expoperipone!=''">
-                and expoperipone =#{expoperipone}
-            </if>
-        </where>
-        LIMIT #{begin},#{end}
-    </select>
-    <select id="selectCount"  parameterType="map" resultType="int">
-        SELECT count(*) FROM expressdetails
-        <where> 1=1
-            <if test="expnum!=null and expnum!='' ">
-                and expnum =#{expnum}
-            </if>
-            <if test="expoper!=null and expoper!=''">
-                and expoper like concat('%',concat(#{expoper},'%'))
-            </if>
-            <if test="expoperipone!=null and expoperipone!=''">
-                and expoperipone =#{expoperipone}
-            </if>
-        </where>
-    </select>
+
     <select id="updateList" parameterType="com.aaa.entity.Expressdetails" resultType="com.aaa.entity.Expressdetails">
         SELECT * FROM expressdetails WHERE expnum=#{expnum} order by expdid desc
     </select>

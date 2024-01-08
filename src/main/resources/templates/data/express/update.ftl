@@ -37,17 +37,17 @@
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
                                 <select name="provid" id="provid" lay-filter="provid">
-                                    <option value="${expresses.recprovince}">请选择省</option>
+                                    <option value="${expresses.recprovince}">${expresses.recprovince}</option>
                                 </select>
                             </div>
                             <div class="layui-input-inline">
                                 <select name="cityid" id="cityid" lay-filter="cityid">
-                                    <option value="${expresses.reccity}">请选择市</option>
+                                    <option value="${expresses.reccity}">${expresses.reccity}</option>
                                 </select>
                             </div>
-                            <div class="layui-input-inline">
+                           <div class="layui-input-inline">
                                 <select name="areaid" id="areaid" lay-filter="areaid">
-                                    <option value="${expresses.reccounty}">请选择区域</option>
+                                    <option value="${expresses.reccounty}">${expresses.reccounty}</option>
                                 </select>
                             </div>
                         </div>

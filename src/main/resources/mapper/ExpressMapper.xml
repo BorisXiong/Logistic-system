@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.mapper.ExpressMapper">
+    <select id="expressdetailsList" parameterType="map" resultType="map" >
+        select * from express
+        <where> 1=1
+            <if test="expnum!=null and expnum!='' ">
+                and expnum =#{expnum}
+            </if>
+            <if test="sender!=null and sender!=''">
+                and sender like concat('%',concat(#{sender},'%'))
+            </if>
+            <if test="sendphone!=null and sendphone!=''">
+                and sendphone =#{sendphone}
+            </if>
+        </where>
+        LIMIT #{begin},#{end}
+    </select>
+    <select id="selectCount1"  parameterType="map" resultType="int">
+        SELECT count(*) FROM express
+        <where> 1=1
+            <if test="expnum!=null and expnum!='' ">
+                and expnum =#{expnum}
+            </if>
+            <if test="sender!=null and sender!=''">
+                and sender like concat('%',concat(#{sender},'%'))
+            </if>
+            <if test="sendphone!=null and sendphone!=''">
+                and sendphone =#{sendphone}
+            </if>
+        </where>
+    </select>
+
     <select id="expressList" parameterType="map" resultType="map">
         SELECT * FROM express
         <where> 1=1

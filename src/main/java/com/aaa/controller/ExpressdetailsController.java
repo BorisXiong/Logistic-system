@@ -23,6 +23,8 @@ import java.util.Map;
 public class ExpressdetailsController {
     @Autowired
     private ExpressdetailsService expressdetailsService;
+    @Autowired
+    private ExpressService expressService;
 
     @RequestMapping("/expressselect")
     public String offerselect()
@@ -32,11 +34,11 @@ public class ExpressdetailsController {
 
     @RequestMapping("/select")
     @ResponseBody
-    public LayuiResult<Map> select(BaseQuery baseQuery, Expressdetails expressdetails){
+    public LayuiResult<Map> select(BaseQuery baseQuery, Express express){
 
         LayuiResult<Map> result=new LayuiResult<Map>();
-        List<Map> maps = expressdetailsService.expressdetailsList(baseQuery, expressdetails);
-        int i = expressdetailsService.selectCount(expressdetails);
+        List<Map> maps = expressService.expressdetailsList(baseQuery, express);
+        int i = expressService.selectCount1(express);
         System.out.println(i+"=====================----+++++++====="+maps);
         result.setData(maps);
         result.setCount(i);
